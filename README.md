@@ -4,11 +4,20 @@ This project is for learning and bulding backend design & develop & deploy.
 
 > **Specially Thanks to Tech School** > https://www.udemy.com/course/backend-master-class-golang-postgresql-kubernetes/
 
-## Note
+# Note
 
-### Database
+## Go
 
-#### migrate
+- `blank modifier _`: Prevent go formatter from removing this from import
+
+## Unit Test
+
+- recommended to use random data to make the code to be more concise and easier to understand.
+- Test\* prefixed go file will be take as Unit Test file
+
+## Database
+
+### migrate
 
 `migrateup`, `migratedown`
 
@@ -52,8 +61,12 @@ cons: mysql is not fully been supported yet (2022.08.06 experimental).
 
 > https://github.com/kyleconroy/sqlc
 
-### CI/CD
+## CI/CD
 
-### Network
+```
+history | grep "some command we typed in recently"
+```
+
+## Network
 
 [SSL](https://www.cloudflare.com/learning/ssl/what-is-ssl/)

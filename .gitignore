@@ -2,4 +2,4 @@
 .vscode
 
 # Auto Code Gen
-db/sqlc/*.go
+# db/sqlc/*.go
