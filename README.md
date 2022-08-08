@@ -10,12 +10,39 @@ This project is for learning and bulding backend design & develop & deploy.
 
 - `blank modifier _`: Prevent go formatter from removing this from import
 
+- `composition`:
+
+- `go routine`:
+
+- `channel types`: a communication mechanism that allows Goroutines to exchange data.
+
 ## Unit Test
 
 - recommended to use random data to make the code to be more concise and easier to understand.
 - Test\* prefixed go file will be take as Unit Test file
 
 ## Database
+
+### cheat sheet
+
+```
+psql -h 127.0.0.1 -d simple_bank -U root -W
+\l
+\dt
+```
+
+> CRUD
+
+```
+select * from entries;
+truncate table entries;
+
+select * from transfers;
+truncate table transfers;
+
+select * from accounts;
+truncate table accounts CASCADE;
+```
 
 ### migrate
 
@@ -60,6 +87,11 @@ cons: mysql is not fully been supported yet (2022.08.06 experimental).
 #### sqlc
 
 > https://github.com/kyleconroy/sqlc
+
+### transaction
+
+> ACID  
+> `Atomicity`, `Consistency`, `Isolation`, `Durablity`
 
 ## CI/CD
 

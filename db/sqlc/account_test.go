@@ -68,7 +68,6 @@ func TestUpdateAccount(t *testing.T) {
 	require.WithinDuration(t, createdAccount.CreatedAt, updatedAccount.CreatedAt, time.Second)
 }
 
-
 func TestDeleteAccount(t *testing.T) {
 	createdAccount := createRandomAccount(t)
 	err := testQueries.DeleteAccount(context.Background(), createdAccount.ID)
@@ -101,4 +100,3 @@ func TestListAccounts(t *testing.T) {
 		require.Equal(t, lastAccount.Owner, account.Owner)
 	}
 }
-
