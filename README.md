@@ -6,7 +6,24 @@ This project is for learning and bulding backend design & develop & deploy.
 
 # Note
 
+## cheat sheet (frequently used in this project)
+
+```
+psql -h 127.0.0.1 -d simple_bank -U root -W
+\l
+\dt
+truncate table accounts CASCADE;
+
+truncate table accounts RESTART IDENTITY CASCADE;
+
+ALTER DATABASE <db name> SET DEFAULT_TRANSACTION_ISOLATION TO 'read committed';
+
+```
+
 ## Go
+
+> If you are new => go through this first
+> https://go.dev/tour/welcome/1
 
 - `blank modifier _`: Prevent go formatter from removing this from import
 
@@ -16,23 +33,21 @@ This project is for learning and bulding backend design & develop & deploy.
 
 - `channel types`: a communication mechanism that allows Goroutines to exchange data.
 
+- `gin`: [HTTP Web framework](https://github.com/gin-gonic/gin)
+
+```
+
+gin: https://pkg.go.dev/github.com/gin-gonic/gin#section-readme
+validator: https://pkg.go.dev/github.com/go-playground/validator#section-readme
+
+```
+
 ## Unit Test
 
 - recommended to use random data to make the code to be more concise and easier to understand.
 - Test\* prefixed go file will be take as Unit Test file
 
 ## Database
-
-### cheat sheet
-
-```
-psql -h 127.0.0.1 -d simple_bank -U root -W
-\l
-\dt
-
-ALTER DATABASE <db name> SET DEFAULT_TRANSACTION_ISOLATION TO 'read committed';
-
-```
 
 > CRUD
 

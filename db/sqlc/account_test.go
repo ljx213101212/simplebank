@@ -85,13 +85,13 @@ func TestListAccounts(t *testing.T) {
 		lastAccount = createRandomAccount(t)
 	}
 
-	arg := ListAccountsParams{
+	arg := ListAccountsByOwnerParams{
 		Owner:  lastAccount.Owner,
 		Limit:  5,
 		Offset: 0,
 	}
 
-	accounts, err := testQueries.ListAccounts(context.Background(), arg)
+	accounts, err := testQueries.ListAccountsByOwner(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, accounts)
 
