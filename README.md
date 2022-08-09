@@ -29,6 +29,9 @@ This project is for learning and bulding backend design & develop & deploy.
 psql -h 127.0.0.1 -d simple_bank -U root -W
 \l
 \dt
+
+ALTER DATABASE <db name> SET DEFAULT_TRANSACTION_ISOLATION TO 'read committed';
+
 ```
 
 > CRUD
@@ -92,6 +95,9 @@ cons: mysql is not fully been supported yet (2022.08.06 experimental).
 
 > ACID  
 > `Atomicity`, `Consistency`, `Isolation`, `Durablity`
+
+> Deadlock prevention
+> `database transaction isolation levels`, `mysql vs postgresSql`, `open terminal side by side to test deadlock`
 
 ## CI/CD
 
