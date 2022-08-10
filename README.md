@@ -35,6 +35,8 @@ ALTER DATABASE <db name> SET DEFAULT_TRANSACTION_ISOLATION TO 'read committed';
 
 - `function receiver`: https://go.dev/tour/methods/4
 
+- `struct tag`: https://github.com/amarjeetanandsingh/tgcon
+
 - `GO111MODULE`: is an environment variable that can be set when using go for changing how Go imports packages. One of the first pain-points is that depending on the Go version, its semantics change. (https://maelvls.dev/go111module-everywhere/)
 
 - `gin`: [HTTP Web framework](https://github.com/gin-gonic/gin)
