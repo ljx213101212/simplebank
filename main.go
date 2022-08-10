@@ -6,7 +6,7 @@ import (
 
 	"github.com/ljx213101212/simplebank/api"
 	db "github.com/ljx213101212/simplebank/db/sqlc"
-	"github.com/techschool/simplebank/util"
+	"github.com/ljx213101212/simplebank/util"
 )
 
 func main() {
