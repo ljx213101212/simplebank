@@ -75,6 +75,8 @@ truncate table accounts CASCADE;
 ```
 https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
 
+migrate create -ext sql -dir db/migration -seq add_users
+
 ```
 
 #### tools tradeoffs
