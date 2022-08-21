@@ -9,7 +9,10 @@ This project is for learning and bulding backend design & develop & deploy.
 ## cheat sheet (frequently used in this project)
 
 ```
+docker exec -it 8f987a9d0acb53cfbc308326bfd559efe7058bbd97317aec3de15e09d068b4bc /bin/sh
+
 psql -h 127.0.0.1 -d simple_bank -U root -W
+password: secret
 \l
 \dt
 truncate table accounts CASCADE;
@@ -66,6 +69,7 @@ truncate table transfers;
 
 select * from accounts;
 truncate table accounts CASCADE;
+
 ```
 
 ### migrate
@@ -79,7 +83,29 @@ migrate create -ext sql -dir db/migration -seq add_users
 
 ```
 
-#### tools tradeoffs
+### key concept
+
+`foreign key`, `constraint`
+
+```
+ALTER TABLE "accounts" ADD FOREIGN KEY ("owner") REFERENCES "users" ("username");
+
+ALTER TABLE "accounts" ADD CONSTRAINT "owner_currency_key" UNIQUE ("owner", "currency");
+```
+
+`ACID`
+
+```
+`Atomicity`, `Consistency`, `Isolation`, `Durablity`
+```
+
+`Deadlock prevention`
+
+```
+`database transaction isolation levels`, `mysql vs postgresSql`, `open terminal side by side to test deadlock`
+```
+
+### tools tradeoffs
 
 database/sql
 
@@ -110,17 +136,9 @@ pros: very fast, auto code gen, catch errors during dev time
 cons: mysql is not fully been supported yet (2022.08.06 experimental).
 ```
 
-#### sqlc
+### sqlc
 
 > https://github.com/kyleconroy/sqlc
-
-### transaction
-
-> ACID  
-> `Atomicity`, `Consistency`, `Isolation`, `Durablity`
-
-> Deadlock prevention
-> `database transaction isolation levels`, `mysql vs postgresSql`, `open terminal side by side to test deadlock`
 
 ## CI/CD
 
