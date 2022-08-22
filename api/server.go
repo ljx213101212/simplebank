@@ -30,6 +30,8 @@ func (server *Server) setupRouter() {
 	router := gin.Default()
 
 	router.GET("/", server.hellowolrd)
+	router.POST("/createUser", server.createUser)
+	router.GET("/getUser", server.getUser)
 	router.POST("/accounts", server.createAccount)
 	router.GET("/accounts/:id", server.getAccount)
 	router.GET("/accounts", server.listAccounts)
