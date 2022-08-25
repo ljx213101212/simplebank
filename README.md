@@ -34,6 +34,8 @@ ALTER DATABASE <db name> SET DEFAULT_TRANSACTION_ISOLATION TO 'read committed';
 
 - `go routine`:
 
+- `Type assertions`: https://go.dev/tour/methods/15
+
 - `channel types`: a communication mechanism that allows Goroutines to exchange data.
 
 - `function receiver`: https://go.dev/tour/methods/4
@@ -50,6 +52,8 @@ gin: https://pkg.go.dev/github.com/gin-gonic/gin#section-readme
 validator: https://pkg.go.dev/github.com/go-playground/validator#section-readme
 
 ```
+
+- `jwt_go`: [go packge to generate jwt token](https://github.com/dgrijalva/jwt-go)
 
 ## Unit Test
 
@@ -191,7 +195,10 @@ history | grep "some command we typed in recently"
     - ECDSA: invalid-curve attack
 
 - Trivial Forgery
+
   - Set "alg" header to "none"
   - Set "alg" header to "HS256" while the server normally verifies token with a RSA public key
+
+- [Claim Standard](https://tools.ietf.org/html/rfc7519#section-4.1)
 
 [PASETO](https://dev.to/techschoolguru/why-paseto-is-better-than-jwt-for-token-based-authentication-1b0c)
