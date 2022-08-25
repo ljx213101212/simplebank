@@ -150,6 +150,14 @@ history | grep "some command we typed in recently"
 
 [Docker Hub - postgreSQL](https://hub.docker.com/_/postgres/)
 
-## Network
+## Network and Security
 
 [SSL](https://www.cloudflare.com/learning/ssl/what-is-ssl/)
+
+`bcrypt`: ALG + COST + SALT + HASH
+
+- https://blog.boot.dev/cryptography/bcrypt-step-by-step/
+
+[Hash vs Encryption](https://www.ssl2buy.com/wiki/difference-between-hashing-and-encryption)
+
+> In short, encryption is a two-way function that includes encryption and decryption whilst hashing is a one-way function that changes a plain text to a unique digest that is irreversible.
