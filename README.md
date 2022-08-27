@@ -154,6 +154,22 @@ history | grep "some command we typed in recently"
 
 [Docker Hub - postgreSQL](https://hub.docker.com/_/postgres/)
 
+```
+alpine version:  lite version
+```
+
+[Dockerfile](https://docs.docker.com/engine/reference/builder/#from)
+
+```
+FROM: base image (check from Docker Hub)
+WORKDIR /app
+COPY [src] [target]
+RUN go build -o main main.go
+
+EXPOSE [network port]
+
+```
+
 ## Network and Security
 
 [SSL](https://www.cloudflare.com/learning/ssl/what-is-ssl/)
