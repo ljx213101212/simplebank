@@ -79,12 +79,12 @@ type getAccountTestCase struct {
 
 func TestGetAccountAPI(t *testing.T) {
 
-	account := randomAccount("jixiang li")
+	user, _ := randomUser(t)
+	account := randomAccount(user.Username)
 
 	getAccountTestCaseGeneral := getAccountTestCase{
 		serveHttp: func(store *mockdb.MockStore, recorder *httptest.ResponseRecorder, url string) {
-			server, err := NewServer(store)
-			require.NoError(t, err)
+			server := newTestServer(t, store)
 			request, err := http.NewRequest(http.MethodGet, url, nil)
 			require.NoError(t, err)
 			server.router.ServeHTTP(recorder, request)
@@ -161,8 +161,8 @@ func TestGetAccountAPI(t *testing.T) {
 
 func TestCreateAccountAPI(t *testing.T) {
 
-	username := "jixiang li"
-	account := randomAccount(username)
+	user, _ := randomUser(t)
+	account := randomAccount(user.Username)
 
 	testCases := []struct {
 		name          string
@@ -173,7 +173,7 @@ func TestCreateAccountAPI(t *testing.T) {
 		{
 			name: "OK",
 			body: gin.H{
-				"owner":    username,
+				"owner":    user.Username,
 				"currency": account.Currency,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
@@ -195,7 +195,7 @@ func TestCreateAccountAPI(t *testing.T) {
 		{
 			name: "InternalError",
 			body: gin.H{
-				"owner":    username,
+				"owner":    user.Username,
 				"currency": account.Currency,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
@@ -211,7 +211,7 @@ func TestCreateAccountAPI(t *testing.T) {
 		{
 			name: "InvalidCurrency",
 			body: gin.H{
-				"owner":    username,
+				"owner":    user.Username,
 				"currency": "invalid",
 			},
 			buildStubs: func(store *mockdb.MockStore) {
@@ -235,7 +235,7 @@ func TestCreateAccountAPI(t *testing.T) {
 			store := mockdb.NewMockStore(ctrl)
 			tc.buildStubs(store)
 
-			server, err := NewServer(store)
+			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 
 			// Marshal body data to JSON
@@ -254,11 +254,11 @@ func TestCreateAccountAPI(t *testing.T) {
 
 func TestListAccountsAPI(t *testing.T) {
 
-	username := "jixiang li"
+	user, _ := randomUser(t)
 	n := 5
 	accounts := make([]db.Account, n)
 	for i := 0; i < n; i++ {
-		accounts[i] = randomAccount(username)
+		accounts[i] = randomAccount(user.Username)
 	}
 
 	type Query struct {
@@ -352,7 +352,7 @@ func TestListAccountsAPI(t *testing.T) {
 			store := mockdb.NewMockStore(ctrl)
 			tc.buildStubs(store)
 
-			server, err := NewServer(store)
+			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 
 			url := "/accounts"

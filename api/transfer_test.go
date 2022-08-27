@@ -214,9 +214,8 @@ func TestTransferAPI(t *testing.T) {
 			store := mockdb.NewMockStore(ctrl)
 			tc.buildStubs(store)
 
-			server, err := NewServer(store)
+			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
-			require.NoError(t, err)
 
 			// Marshal body data to JSON
 			data, err := json.Marshal(tc.body)
