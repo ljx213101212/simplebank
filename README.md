@@ -170,6 +170,8 @@ EXPOSE [network port]
 
 ```
 
+[Docker CLI](https://docs.docker.com/engine/reference/commandline)
+
 ## Network and Security
 
 [SSL](https://www.cloudflare.com/learning/ssl/what-is-ssl/)
