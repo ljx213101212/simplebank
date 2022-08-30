@@ -36,6 +36,9 @@ dockerbuild:
 dockerrun:
 	docker run --name simplebank --network bank-network -p 8080:8080 -e GIN_MODE=release -e DB_SOURCE="postgresql://root:secret@postgres-alpine14:5432/simple_bank?sslmode=disable" simplebank:latest
 
+dockerstop:
+	docker container stop simplebank
+	
 dockerrm:
 	docker container rm simplebank
 
