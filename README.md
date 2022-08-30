@@ -172,6 +172,15 @@ EXPOSE [network port]
 
 [Docker CLI](https://docs.docker.com/engine/reference/commandline)
 
+[Docker Compose](https://docs.docker.com/compose/startup-order/)
+
+```
+docker compose down
+docker compose up
+```
+
+- [wait-for](https://github.com/Eficode/wait-for)
+
 ## Network and Security
 
 [SSL](https://www.cloudflare.com/learning/ssl/what-is-ssl/)
