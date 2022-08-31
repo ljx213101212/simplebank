@@ -229,3 +229,21 @@ docker compose up
 - [Claim Standard](https://tools.ietf.org/html/rfc7519#section-4.1)
 
 [PASETO](https://dev.to/techschoolguru/why-paseto-is-better-than-jwt-for-token-based-authentication-1b0c)
+
+## Cloud
+
+- Create a free tier amazon account
+- Create a ECR repository
+- Use Github Action to deploy
+- Create IAM for aws
+
+### Amazon ECR
+
+### Github Action
+
+```
+Amazon ECR "Login" Action for GitHub Actions
+
+```
+
+### IAM
