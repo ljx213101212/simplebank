@@ -236,6 +236,7 @@ docker compose up
 - Create a ECR repository
 - Use Github Action to deploy
 - Create IAM for aws
+- Create AWS RDS as a production DB
 
 ### Amazon ECR
 
@@ -247,3 +248,15 @@ Amazon ECR "Login" Action for GitHub Actions
 ```
 
 ### IAM
+
+```
+add
+AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+into Githu Action
+```
+
+### AWS RDS
+
+```
+
+```

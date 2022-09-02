@@ -1,5 +1,7 @@
 *.log
 .vscode
 
+prod.env
+
 # Auto Code Gen
 # db/sqlc/*.go

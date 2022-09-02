@@ -1,4 +1,5 @@
 include app.env
+include prod.env
 
 createdb:
 	docker exec -it postgres-alpine14 createdb --username=root --owner=root simple_bank
@@ -12,6 +13,9 @@ migrateup:
 migrateup1:
 	migrate -path db/migration -database "$(DB_SOURCE)" -verbose up 1
 
+migrateuprds:
+	migrate -path db/migration -database "${DB_SOURCE_RDS}" -verbose up
+
 migratedown:
 	migrate -path db/migration -database "${DB_SOURCE}" -verbose down
 
@@ -24,7 +28,7 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-server: 
+server:
 	go run main.go
 
 mock:
@@ -38,7 +42,7 @@ dockerrun:
 
 dockerstop:
 	docker container stop simplebank
-	
+
 dockerrm:
 	docker container rm simplebank
 
@@ -61,4 +65,3 @@ dockerconnectsimplebank:
 	docker network connect bank-network simplebank
 
 .PHONY: postgres createdb dropdb migrateup migratedown sqlc test mock
-
