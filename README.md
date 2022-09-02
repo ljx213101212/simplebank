@@ -27,6 +27,8 @@ truncate table accounts RESTART IDENTITY CASCADE;
 
 ALTER DATABASE <db name> SET DEFAULT_TRANSACTION_ISOLATION TO 'read committed';
 
+openssl rand -hex 64 | head -c 32
+
 ```
 
 ## Go
@@ -250,6 +252,10 @@ decryptenv
 - Use Github Action to deploy
 - Create IAM for aws
 - Create AWS RDS as a production DB
+- Create Secrets Manager for Application Secret storage
+- Add Secrets Manager access permission from IAM
+- AWS CLI
+- install jq to process secret string to prod.env formart
 
 ### Amazon ECR
 
@@ -271,5 +277,29 @@ into Githu Action
 ### AWS RDS
 
 ```
+
+```
+
+### AWS CLI
+
+- ARN -Amazon Source Name
+- https://docs.aws.amazon.com/cli/v1/userguide/install-virtualenv.html
+
+```
+pip install --user virtualenv
+python -m virtualenv ~/cli-ve
+source ~/cli-ve/bin/activate
+
+aws configure
+ - create new access key from IAM to fill in
+
+cat ~/.aws/credentials
+cat ~/.aws/config
+
+(remember to add secret manager permission to IAM group)
+aws secretsmanager get-secret-value --secret-id simple_bank
+aws secretsmanager get-secret-value --secret-id simple_bank --query SecretString --output text
+
+aws secretsmanager get-secret-value --secret-id simple_bank --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]'
 
 ```
