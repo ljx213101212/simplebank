@@ -4,6 +4,12 @@ This project is for learning and bulding backend design & develop & deploy.
 
 > **Specially Thanks to Tech School** > https://www.udemy.com/course/backend-master-class-golang-postgresql-kubernetes/
 
+# Config
+
+```
+change prod.template.env to prod.env and fill in DB connection string from your local.
+```
+
 # Note
 
 ## cheat sheet (frequently used in this project)
@@ -20,6 +26,8 @@ truncate table accounts CASCADE;
 truncate table accounts RESTART IDENTITY CASCADE;
 
 ALTER DATABASE <db name> SET DEFAULT_TRANSACTION_ISOLATION TO 'read committed';
+
+openssl rand -hex 64 | head -c 32
 
 ```
 
@@ -181,6 +189,13 @@ docker compose up
 
 - [wait-for](https://github.com/Eficode/wait-for)
 
+- [encrypt secret project info in openssl](https://www.madboa.com/geek/openssl/#encrypt-simple)
+
+```make
+encryptenv
+decryptenv
+```
+
 ## Network and Security
 
 [SSL](https://www.cloudflare.com/learning/ssl/what-is-ssl/)
@@ -236,6 +251,11 @@ docker compose up
 - Create a ECR repository
 - Use Github Action to deploy
 - Create IAM for aws
+- Create AWS RDS as a production DB
+- Create Secrets Manager for Application Secret storage
+- Add Secrets Manager access permission from IAM
+- AWS CLI
+- install jq to process secret string to prod.env formart
 
 ### Amazon ECR
 
@@ -247,3 +267,39 @@ Amazon ECR "Login" Action for GitHub Actions
 ```
 
 ### IAM
+
+```
+add
+AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+into Githu Action
+```
+
+### AWS RDS
+
+```
+
+```
+
+### AWS CLI
+
+- ARN -Amazon Source Name
+- https://docs.aws.amazon.com/cli/v1/userguide/install-virtualenv.html
+
+```
+pip install --user virtualenv
+python -m virtualenv ~/cli-ve
+source ~/cli-ve/bin/activate
+
+aws configure
+ - create new access key from IAM to fill in
+
+cat ~/.aws/credentials
+cat ~/.aws/config
+
+(remember to add secret manager permission to IAM group)
+aws secretsmanager get-secret-value --secret-id simple_bank
+aws secretsmanager get-secret-value --secret-id simple_bank --query SecretString --output text
+
+aws secretsmanager get-secret-value --secret-id simple_bank --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]'
+
+```
