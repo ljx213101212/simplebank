@@ -2,6 +2,7 @@
 .vscode
 
 prod.env
+prod.enc
 
 # Auto Code Gen
 # db/sqlc/*.go

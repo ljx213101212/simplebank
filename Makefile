@@ -34,6 +34,12 @@ server:
 mock:
 	mockgen -destination db/mock/store.go github.com/ljx213101212/simplebank/db/sqlc Store
 
+encryptenv:
+	openssl enc -aes-256-cbc -salt -in prod.env -out prod.enc
+
+decryptenv:
+	openssl enc -d -aes-256-cbc -in prod.enc -out prod.env
+
 dockerbuild:
 	docker build -t simplebank:latest .
 

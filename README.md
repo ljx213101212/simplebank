@@ -4,6 +4,12 @@ This project is for learning and bulding backend design & develop & deploy.
 
 > **Specially Thanks to Tech School** > https://www.udemy.com/course/backend-master-class-golang-postgresql-kubernetes/
 
+# Config
+
+```
+change prod.template.env to prod.env and fill in DB connection string from your local.
+```
+
 # Note
 
 ## cheat sheet (frequently used in this project)
@@ -180,6 +186,13 @@ docker compose up
 ```
 
 - [wait-for](https://github.com/Eficode/wait-for)
+
+- [encrypt secret project info in openssl](https://www.madboa.com/geek/openssl/#encrypt-simple)
+
+```make
+encryptenv
+decryptenv
+```
 
 ## Network and Security
 
