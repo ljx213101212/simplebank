@@ -8,3 +8,9 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+  - repo: local
+    hooks:
+      - id: hellowolrd
+        name: hello wolrd
+        entry: ./hello-pre-commit.sh
+        language: script
