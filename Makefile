@@ -1,5 +1,4 @@
 include app.env
-include prod.env
 
 createdb:
 	docker exec -it postgres-alpine14 createdb --username=root --owner=root simple_bank
@@ -12,9 +11,6 @@ migrateup:
 
 migrateup1:
 	migrate -path db/migration -database "$(DB_SOURCE)" -verbose up 1
-
-migrateuprds:
-	migrate -path db/migration -database "${DB_SOURCE_RDS}" -verbose up
 
 migratedown:
 	migrate -path db/migration -database "${DB_SOURCE}" -verbose down
