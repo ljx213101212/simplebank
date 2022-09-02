@@ -277,6 +277,8 @@ into Githu Action
 ### AWS RDS
 
 ```
+migrateuprds:
+	migrate -path db/migration -database "${DB_SOURCE_RDS}" -verbose up
 
 ```
 
