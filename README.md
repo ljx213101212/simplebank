@@ -259,10 +259,16 @@ decryptenv
 
 - Create a EKS repository
 - Create IAM role for accessing cluster service role
-- wait for 15 mins
+- wait for around 15 mins for creating the EKS repository
 - Add a node group in EKS
 - Create IAM role for node group
-- wait for 5 mins
+- wait for 5 mins for creating the node group in EKS repository
+- [create aws-auth.yaml to get cluster access](https://aws.amazon.com/premiumsupport/knowledge-center/amazon-eks-cluster-access/)
+
+- [Deploy a App into EKS](https://docs.aws.amazon.com/eks/latest/userguide/sample-deployment.html)
+- Learn how to use k9s to manage the EKS cluster and pods
+- create deployment.yaml to deploy the go api
+- Add service.yaml to expose the api to outside, so outside can access (by load balancer)
 
 ### Amazon ECR
 
@@ -332,6 +338,8 @@ docker run -p 8080:8080 [image url from ecr]
 
 ### AWS EKS
 
+> (Learn this)https://kubernetes.io/docs/tutorials/kubernetes-basics/
+
 > a managed service that makes it easy for you to use Kubernetes on AWS without needing to install and operate your own Kubernetes control plane.
 
 `Kubernates`:
@@ -351,4 +359,77 @@ vpc: Virtual Private Cloud
 node group -> capacity type -> spot: cheaper but not stable
 node group -> capacity type -> on-demand: stable, safe for api
 
+```
+
+`kubectl`: https://kubernetes.io/docs/reference/kubectl/
+
+> https://aws.amazon.com/premiumsupport/knowledge-center/amazon-eks-cluster-access/
+
+```
+
+Issue 1:  kubectl cluster-info
+error: the server doesn't have a resource type "services"
+
+Solution:
+1. add EKS full access to IAM group
+2. aws eks update-kubeconfig --name simple-bank --regioin ap-southeast-1
+3. verify cat ~/.kube/config
+
+Issue 2: kubectl cluster-info
+error: You must be logged in to the server (Unauthorized)
+
+root cause:
+- aws sts get-caller-identity
+{
+    "UserId": "AIDAWGPPKLX3GEAEKGD2X",
+    "Account": "426240531958",
+    "Arn": "arn:aws:iam::426240531958:user/github-ci"
+}
+
+Solution:
+1. https://aws.amazon.com/premiumsupport/knowledge-center/amazon-eks-cluster-access/
+2. create a root access key
+3. update cat ~/.aws/credentials
+4. add root keypair as [default], update original pairs under [github] section (controlled in AWS_PROFILE, e.g exportAWS_PROFILE = github,  export AWS_PROFILE = default)
+5. verify the crendetials status by
+- aws sts get-caller-identity
+{
+    "UserId": "426240531958",
+    "Account": "426240531958",
+    "Arn": "arn:aws:iam::426240531958:root"
+}
+6. we can see we are using root access.
+
+```
+
+> https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html
+
+```
+Add designated_user to the ConfigMap if cluster_creator is an IAM user
+
+1. create aws-auth.yaml in eks folder
+2. kubectl apply -f eks/aws-auth.yaml
+
+```
+
+- k9s (https://k9scli.io/)
+
+  > a terminal based UI to interact with your Kubernetes clusters
+
+```
+:cluster
+:deployment
+```
+
+`EKS deployment`
+
+```
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html
+
+```
+
+`load balancer`
+
+```
+https://aws.amazon.com/elasticloadbalancing/
 ```
