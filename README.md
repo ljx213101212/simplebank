@@ -257,6 +257,13 @@ decryptenv
 - AWS CLI
 - install jq to process secret string to prod.env formart
 
+- Create a EKS repository
+- Create IAM role for accessing cluster service role
+- wait for 15 mins
+- Add a node group in EKS
+- Create IAM role for node group
+- wait for 5 mins
+
 ### Amazon ECR
 
 ### Github Action
@@ -316,5 +323,32 @@ aws ecr get-login-password \
 | docker login \
     --username AWS \
     --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
+
+
+docker run -p 8080:8080 [image url from ecr]
+```
+
+-
+
+### AWS EKS
+
+> a managed service that makes it easy for you to use Kubernetes on AWS without needing to install and operate your own Kubernetes control plane.
+
+`Kubernates`:
+
+- An open-source container orchestration engine
+- For automating deployment, scaling, and management of containerized applications
+
+```
+Kubelet agaent: make sure containers run inside pods
+
+Container runtimes: Docker, containerd, CRI-O
+
+Kube-proxy: maintain network rules, allow communication with pods
+
+vpc: Virtual Private Cloud
+
+node group -> capacity type -> spot: cheaper but not stable
+node group -> capacity type -> on-demand: stable, safe for api
 
 ```
