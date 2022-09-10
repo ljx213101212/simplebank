@@ -270,6 +270,9 @@ decryptenv
 - create deployment.yaml to deploy the go api
 - Add service.yaml to expose the api to outside, so outside can access (by load balancer)
 
+- Change Service type from "LoadBalancer" to "ClusterIP" and redeploy service.yaml
+- add ingress.yaml and route simple-bank-api-service and deploy ingress.yaml
+
 ### Amazon ECR
 
 ### Github Action
@@ -433,3 +436,9 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html
 ```
 https://aws.amazon.com/elasticloadbalancing/
 ```
+
+### Ingress
+
+> https://kubernetes.io/docs/concepts/services-networking/ingress/
+
+- [ingress-controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
