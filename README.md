@@ -29,6 +29,8 @@ ALTER DATABASE <db name> SET DEFAULT_TRANSACTION_ISOLATION TO 'read committed';
 
 openssl rand -hex 64 | head -c 32
 
+nslookup (in aws console)
+
 ```
 
 ## Go
@@ -200,6 +202,17 @@ decryptenv
 
 [SSL](https://www.cloudflare.com/learning/ssl/what-is-ssl/)
 
+- The predecessor of TLS
+
+[TLS]
+
+- A cryptographic protocol that provides secure communication over
+  a computer network
+
+  1. Authentication
+  2. Confidentiality
+  3. Integrity
+
 [Bcrypt](https://blog.boot.dev/cryptography/bcrypt-step-by-step/)
 
 > ALG + COST + SALT + HASH
@@ -271,7 +284,13 @@ decryptenv
 - Add service.yaml to expose the api to outside, so outside can access (by load balancer)
 
 - Change Service type from "LoadBalancer" to "ClusterIP" and redeploy service.yaml
-- add ingress.yaml and route simple-bank-api-service and deploy ingress.yaml
+- add ingress.yaml and route simple-bank-api-service and deploy ingress_no_https.yaml
+- install cert-manager into kubectl env
+- create certificate resources from cert-manager in issuer.yaml and deploy
+- attach issuer to ingress
+- add tls support and cert-manager annotation(letsencrypt) in ingress.yaml and deploy ingress.yaml
+
+- Eventually succesfully deployed go lang api into AWS EKS with TLS certificates (https://api2.jixiang-li.com)
 
 ### Amazon ECR
 
@@ -442,3 +461,31 @@ https://aws.amazon.com/elasticloadbalancing/
 > https://kubernetes.io/docs/concepts/services-networking/ingress/
 
 - [ingress-controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
+
+- [deploy ingress]
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.1/deploy/static/provider/cloud/deploy.yaml
+
+```
+
+### cert-manager
+
+- [cert-manager](https://cert-manager.io/docs/)
+
+```
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
+
+kubectl get pods --namespace cert-manager
+kubectl apply -f eks/issuer.yaml
+```
+
+```
+trouble shooting only (x509 issue when you deploy ingress.yaml)
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+
+deploy ingress again
+
+```
+
+- [Let's Encrypt](https://letsencrypt.org/)
