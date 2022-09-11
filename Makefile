@@ -66,4 +66,13 @@ dockerconnectpostgres:
 dockerconnectsimplebank:
 	docker network connect bank-network simplebank
 
+k8sauth:
+	kubectl apply -f eks/aws-auth.yaml
+
+k8sdeploy:
+	kubectl apply -f eks/deployment.yaml
+
+k8sservice:
+	kubectl apply -f eks/service.yaml
+
 .PHONY: postgres createdb dropdb migrateup migratedown sqlc test mock

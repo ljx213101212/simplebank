@@ -29,6 +29,8 @@ ALTER DATABASE <db name> SET DEFAULT_TRANSACTION_ISOLATION TO 'read committed';
 
 openssl rand -hex 64 | head -c 32
 
+nslookup (in aws console)
+
 ```
 
 ## Go
@@ -200,6 +202,17 @@ decryptenv
 
 [SSL](https://www.cloudflare.com/learning/ssl/what-is-ssl/)
 
+- The predecessor of TLS
+
+[TLS]
+
+- A cryptographic protocol that provides secure communication over
+  a computer network
+
+  1. Authentication
+  2. Confidentiality
+  3. Integrity
+
 [Bcrypt](https://blog.boot.dev/cryptography/bcrypt-step-by-step/)
 
 > ALG + COST + SALT + HASH
@@ -256,6 +269,28 @@ decryptenv
 - Add Secrets Manager access permission from IAM
 - AWS CLI
 - install jq to process secret string to prod.env formart
+
+- Create a EKS repository
+- Create IAM role for accessing cluster service role
+- wait for around 15 mins for creating the EKS repository
+- Add a node group in EKS
+- Create IAM role for node group
+- wait for 5 mins for creating the node group in EKS repository
+- [create aws-auth.yaml to get cluster access](https://aws.amazon.com/premiumsupport/knowledge-center/amazon-eks-cluster-access/)
+
+- [Deploy a App into EKS](https://docs.aws.amazon.com/eks/latest/userguide/sample-deployment.html)
+- Learn how to use k9s to manage the EKS cluster and pods
+- create deployment.yaml to deploy the go api
+- Add service.yaml to expose the api to outside, so outside can access (by load balancer)
+
+- Change Service type from "LoadBalancer" to "ClusterIP" and redeploy service.yaml
+- add ingress.yaml and route simple-bank-api-service and deploy ingress_no_https.yaml
+- install cert-manager into kubectl env
+- create certificate resources from cert-manager in issuer.yaml and deploy
+- attach issuer to ingress
+- add tls support and cert-manager annotation(letsencrypt) in ingress.yaml and deploy ingress.yaml
+
+- Eventually succesfully deployed go lang api into AWS EKS with TLS certificates (https://api2.jixiang-li.com)
 
 ### Amazon ECR
 
@@ -317,4 +352,140 @@ aws ecr get-login-password \
     --username AWS \
     --password-stdin <aws_account_id>.dkr.ecr.<region>.amazonaws.com
 
+
+docker run -p 8080:8080 [image url from ecr]
 ```
+
+-
+
+### AWS EKS
+
+> (Learn this)https://kubernetes.io/docs/tutorials/kubernetes-basics/
+
+> a managed service that makes it easy for you to use Kubernetes on AWS without needing to install and operate your own Kubernetes control plane.
+
+`Kubernates`:
+
+- An open-source container orchestration engine
+- For automating deployment, scaling, and management of containerized applications
+
+```
+Kubelet agaent: make sure containers run inside pods
+
+Container runtimes: Docker, containerd, CRI-O
+
+Kube-proxy: maintain network rules, allow communication with pods
+
+vpc: Virtual Private Cloud
+
+node group -> capacity type -> spot: cheaper but not stable
+node group -> capacity type -> on-demand: stable, safe for api
+
+```
+
+`kubectl`: https://kubernetes.io/docs/reference/kubectl/
+
+> https://aws.amazon.com/premiumsupport/knowledge-center/amazon-eks-cluster-access/
+
+```
+
+Issue 1:  kubectl cluster-info
+error: the server doesn't have a resource type "services"
+
+Solution:
+1. add EKS full access to IAM group
+2. aws eks update-kubeconfig --name simple-bank --regioin ap-southeast-1
+3. verify cat ~/.kube/config
+
+Issue 2: kubectl cluster-info
+error: You must be logged in to the server (Unauthorized)
+
+root cause:
+- aws sts get-caller-identity
+{
+    "UserId": "AIDAWGPPKLX3GEAEKGD2X",
+    "Account": "426240531958",
+    "Arn": "arn:aws:iam::426240531958:user/github-ci"
+}
+
+Solution:
+1. https://aws.amazon.com/premiumsupport/knowledge-center/amazon-eks-cluster-access/
+2. create a root access key
+3. update cat ~/.aws/credentials
+4. add root keypair as [default], update original pairs under [github] section (controlled in AWS_PROFILE, e.g exportAWS_PROFILE = github,  export AWS_PROFILE = default)
+5. verify the crendetials status by
+- aws sts get-caller-identity
+{
+    "UserId": "426240531958",
+    "Account": "426240531958",
+    "Arn": "arn:aws:iam::426240531958:root"
+}
+6. we can see we are using root access.
+
+```
+
+> https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html
+
+```
+Add designated_user to the ConfigMap if cluster_creator is an IAM user
+
+1. create aws-auth.yaml in eks folder
+2. kubectl apply -f eks/aws-auth.yaml
+
+```
+
+- k9s (https://k9scli.io/)
+
+  > a terminal based UI to interact with your Kubernetes clusters
+
+```
+:cluster
+:deployment
+```
+
+`EKS deployment`
+
+```
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html
+
+```
+
+`load balancer`
+
+```
+https://aws.amazon.com/elasticloadbalancing/
+```
+
+### Ingress
+
+> https://kubernetes.io/docs/concepts/services-networking/ingress/
+
+- [ingress-controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
+
+- [deploy ingress]
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.1/deploy/static/provider/cloud/deploy.yaml
+
+```
+
+### cert-manager
+
+- [cert-manager](https://cert-manager.io/docs/)
+
+```
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
+
+kubectl get pods --namespace cert-manager
+kubectl apply -f eks/issuer.yaml
+```
+
+```
+trouble shooting only (x509 issue when you deploy ingress.yaml)
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+
+deploy ingress again
+
+```
+
+- [Let's Encrypt](https://letsencrypt.org/)
