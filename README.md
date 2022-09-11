@@ -489,3 +489,41 @@ deploy ingress again
 ```
 
 - [Let's Encrypt](https://letsencrypt.org/)
+
+### Clean Up
+
+> EKS is too expensive, 148hrs costed me around 14 USD (almost 0.1 USD per hour)
+
+- `EKS`
+
+```
+remove simple-bank node groups
+delete simple-bank cluster
+
+```
+
+- `EC2`
+
+```
+double check (all instances stopped / removed)
+double check (all load balancer)
+```
+
+- `ECR`
+
+```
+remove simplebank repository
+```
+
+- `RDS`
+
+```
+remove all simple-bank database
+```
+
+- `AWS Secrets Manager`
+
+```
+schedule a deletion for secrets manager (7 -30 days), can select 7 days
+
+```
